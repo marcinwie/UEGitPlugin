@@ -77,8 +77,17 @@ public:
 	virtual bool UsesCheckout() const override;
 #if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 	virtual bool UsesFileRevisions() const override;
+#if ENGINE_MINOR_VERSION < 8
+	// Deprecated and made 'final' in the base in UE 5.8 - no longer overridable.
 	virtual TOptional<bool> IsAtLatestRevision() const override;
 	virtual TOptional<int> GetNumLocalChanges() const override;
+#endif
+#endif
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 8
+	// New pure-virtuals added to ISourceControlProvider in UE 5.8.
+	virtual bool UsesSoftRevertOnDelete() const override;
+	virtual TOptional<bool> HasChangesToSync() const override;
+	virtual TOptional<bool> HasChangesToCheckIn() const override;
 #endif
 #if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 2
 	virtual bool AllowsDiffAgainstDepot() const override;

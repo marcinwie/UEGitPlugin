@@ -574,6 +574,7 @@ bool FGitSourceControlProvider::UsesFileRevisions() const
 	return true;
 }
 
+#if ENGINE_MINOR_VERSION < 8
 TOptional<bool> FGitSourceControlProvider::IsAtLatestRevision() const
 {
 	return TOptional<bool>();
@@ -582,6 +583,24 @@ TOptional<bool> FGitSourceControlProvider::IsAtLatestRevision() const
 TOptional<int> FGitSourceControlProvider::GetNumLocalChanges() const
 {
 	return TOptional<int>();
+}
+#endif
+#endif
+
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 8
+bool FGitSourceControlProvider::UsesSoftRevertOnDelete() const
+{
+	return false;
+}
+
+TOptional<bool> FGitSourceControlProvider::HasChangesToSync() const
+{
+	return TOptional<bool>();
+}
+
+TOptional<bool> FGitSourceControlProvider::HasChangesToCheckIn() const
+{
+	return TOptional<bool>();
 }
 #endif
 
